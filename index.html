@@ -11,25 +11,29 @@
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
-        body { font-family: 'Quicksand', sans-serif; overflow: hidden; touch-action: manipulation; margin: 0; height: 100dvh; -webkit-tap-highlight-color: transparent; }
+        :root {
+          --safe-top: env(safe-area-inset-top, 20px);
+          --safe-bottom: env(safe-area-inset-bottom, 20px);
+        }
+        body { font-family: 'Quicksand', sans-serif; overflow: hidden; touch-action: manipulation; margin: 0; height: 100dvh; width: 100vw; -webkit-tap-highlight-color: transparent; }
         .font-romantic { font-family: 'Dancing Script', cursive; }
         .bg-scroller { background: linear-gradient(-45deg, #fff5f7, #ffe4e6, #fff1f2, #ffedf0); background-size: 400% 400%; animation: gradientBG 15s ease infinite; }
         @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-        .dice { background: white; border: 2px solid; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: bold; box-shadow: 0 2px 0 rgba(0,0,0,0.02); }
+        .dice { background: white; border: 2px solid; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: bold; box-shadow: 0 2px 0 rgba(0,0,0,0.02); }
         .dice.rolling { animation: diceRoll 0.1s infinite; }
         @keyframes diceRoll { 0% { transform: rotate(0); } 100% { transform: rotate(360deg); } }
         .heart-jump { animation: jump 0.4s ease-out; }
         @keyframes jump { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-30px) scale(1.1); } }
-        .life-path-scroll { display: flex; gap: 16px; padding: 20px 40px 100px 40px; overflow-x: auto; scroll-behavior: smooth; scrollbar-width: none; -webkit-overflow-scrolling: touch; height: 100%; align-items: center; }
+        .life-path-scroll { display: flex; gap: 20px; padding: 20px 60px 40px 60px; overflow-x: auto; scroll-behavior: smooth; scrollbar-width: none; -webkit-overflow-scrolling: touch; height: 100%; align-items: center; }
         .life-path-scroll::-webkit-scrollbar { display: none; }
-        .step-tile { flex: 0 0 130px; height: 170px; background: rgba(255, 255, 255, 1); border: 1.5px solid white; border-radius: 18px; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; position: relative; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); opacity: 0.25; padding: 12px 6px; text-align: center; }
-        .step-tile.active { opacity: 1; border-color: #ff4d6d; transform: translateY(-4px) scale(1.2); box-shadow: 0 10px 20px rgba(0,0,0,0.05); z-index: 20; }
-        .step-tile.visited { opacity: 0.5; }
+        .step-tile { flex: 0 0 140px; height: 190px; background: rgba(255, 255, 255, 1); border: 1.5px solid white; border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; position: relative; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); opacity: 0.3; padding: 15px 10px; text-align: center; }
+        .step-tile.active { opacity: 1; border-color: #ff4d6d; transform: translateY(-5px) scale(1.18); box-shadow: 0 10px 25px rgba(0,0,0,0.06); z-index: 20; }
+        .step-tile.visited { opacity: 0.6; }
         .step-tile.milestone { border-width: 3px; border-color: #ffd1dc; }
-        .step-number { position: absolute; top: 8px; left: 10px; font-size: 7px; font-weight: 900; color: #ffb3c1; }
+        .step-number { position: absolute; top: 10px; left: 12px; font-size: 8px; font-weight: 900; color: #ffb3c1; }
         .shake { animation: shakeAnim 0.15s infinite; }
-        @keyframes shakeAnim { 0% { transform: translate(0, 0); } 25% { transform: translate(2px, 2px); } 50% { transform: translate(-2px, 0); } 75% { transform: translate(1px, -1px); } 100% { transform: translate(0, 0); } }
-        .frame-decoration { position: fixed; top: 4px; bottom: 4px; left: 4px; right: 4px; border: 1px solid rgba(255, 77, 109, 0.01); border-radius: 20px; pointer-events: none; z-index: 50; }
+        @keyframes shakeAnim { 0% { transform: translate(0, 0); } 25% { transform: translate(2px, 2px); } 50% { transform: translate(-3px, 0); } 75% { transform: translate(1px, -1px); } 100% { transform: translate(0, 0); } }
+        .frame-decoration { position: fixed; top: 8px; bottom: 8px; left: 8px; right: 8px; border: 1px solid rgba(255, 77, 109, 0.015); border-radius: 30px; pointer-events: none; z-index: 50; }
     </style>
 <script type="importmap">
 {

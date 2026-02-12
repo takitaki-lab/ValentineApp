@@ -196,14 +196,14 @@ const App: React.FC = () => {
     
     let attempts = 0;
     do {
-      nX = 15 + Math.random() * (viewportW - 130);
-      nY = 70 + Math.random() * (viewportH - 170);
+      nX = 20 + Math.random() * (viewportW - 140);
+      nY = 100 + Math.random() * (viewportH - 250); // Avoid top island and bottom bar
       attempts++;
     } while (
       yesRect &&
       nX > yesRect.left - 20 && nX < yesRect.right + 20 &&
       nY > yesRect.top - 20 && nY < yesRect.bottom + 20 &&
-      attempts < 15
+      attempts < 20
     );
     
     setNoPosition({ x: nX, y: nY });
@@ -229,16 +229,16 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className={`h-screen flex flex-col items-center justify-center relative overflow-hidden transition-colors duration-1000 ${isShaking ? 'shake' : ''} ${arc === 'india' ? 'bg-[#fff4e0]' : 'bg-scroller'}`}>
+    <div className={`h-[100dvh] w-full flex flex-col items-center justify-center relative overflow-hidden transition-colors duration-1000 ${isShaking ? 'shake' : ''} ${arc === 'india' ? 'bg-[#fff4e0]' : 'bg-scroller'}`}>
       <div className="frame-decoration pointer-events-none" />
       
       {stage === 'victory' ? (
-        <div className="h-full w-full flex flex-col items-center overflow-hidden relative">
+        <div className="h-full w-full flex flex-col items-center overflow-hidden relative pt-[env(safe-area-inset-top,20px)] pb-[env(safe-area-inset-bottom,20px)]">
           
           {isBlastingOff && (
-            <div className="fixed inset-0 z-[5000] bg-[#050010] flex flex-col items-center justify-center animate-pulse">
+            <div className="fixed inset-0 z-[5000] bg-[#050010] flex flex-col items-center justify-center animate-pulse p-6">
                <div className="text-[100px] animate-bounce">🚀</div>
-               <h2 className="text-white font-black text-2xl mt-8 tracking-[0.4em]">SPACE LAUNCH</h2>
+               <h2 className="text-white font-black text-2xl mt-8 tracking-[0.4em] text-center">SPACE LAUNCH</h2>
                <p className="text-pink-300 mt-4 text-lg font-romantic text-center">Approaching Rose Planet...</p>
             </div>
           )}
@@ -249,7 +249,7 @@ const App: React.FC = () => {
                <h1 className="text-4xl font-romantic text-red-600 mb-2">Rose Planet</h1>
                <div className="bg-white/90 p-5 rounded-[25px] shadow-2xl max-w-sm w-full border-4 border-orange-200">
                   <p className="text-lg font-black text-orange-600 mb-4">"Ready for India?"</p>
-                  <button onClick={startIndiaArc} className="w-full bg-gradient-to-r from-orange-600 to-yellow-500 text-white font-black py-3.5 rounded-full shadow-lg text-base animate-bounce">
+                  <button onClick={startIndiaArc} className="w-full bg-gradient-to-r from-orange-600 to-yellow-500 text-white font-black py-4 rounded-full shadow-lg text-base animate-bounce">
                     GO TO INDIA 🇮🇳
                   </button>
                </div>
@@ -273,11 +273,11 @@ const App: React.FC = () => {
 
           {!isBlastingOff && !isLandedOnPlanet && !goalReached && (
             <>
-              <div className="z-10 text-center px-4 pt-5 mb-1 shrink-0">
-                <p className={`text-[8px] tracking-[0.2em] uppercase font-black opacity-40 ${arc === 'india' ? 'text-orange-600' : 'text-pink-500'}`}>
+              <div className="z-10 text-center px-4 pt-4 mb-2 shrink-0">
+                <p className={`text-[9px] tracking-[0.2em] uppercase font-black opacity-40 ${arc === 'india' ? 'text-orange-600' : 'text-pink-500'}`}>
                   {arc === 'valentine' ? `${currentIdx+1}/100` : `India ${currentIdx-99}/500`}
                 </p>
-                <h2 className={`text-xl font-romantic drop-shadow-sm transition-colors duration-500 ${arc === 'india' ? 'text-[#c05621]' : 'text-red-600'}`}>
+                <h2 className={`text-2xl font-romantic drop-shadow-sm transition-colors duration-500 ${arc === 'india' ? 'text-[#c05621]' : 'text-red-600'}`}>
                   {arc === 'india' ? 'India Odyssey 🇮🇳' : 'Valentine Road 💖'}
                 </h2>
               </div>
@@ -286,12 +286,12 @@ const App: React.FC = () => {
                 <div ref={pathScrollRef} className="life-path-scroll">
                   {STEPS_DATA.map(step => (
                     <div key={step.id} className={`step-tile step-${step.id} ${step.id === currentIdx ? 'active' : ''} ${step.id < currentIdx ? 'visited' : ''} ${step.isMilestone ? 'milestone' : ''}`}>
-                      {step.id === currentIdx && <div className={`absolute -top-8 text-4xl drop-shadow-md z-30 ${isJumping ? 'heart-jump' : ''}`}>{arc === 'india' ? '🛺' : '💖'}</div>}
+                      {step.id === currentIdx && <div className={`absolute -top-10 text-4xl drop-shadow-md z-30 ${isJumping ? 'heart-jump' : ''}`}>{arc === 'india' ? '🛺' : '💖'}</div>}
                       <span className="step-number">#{step.id + 1}</span>
-                      <div className={`relative w-full aspect-square mb-1.5 flex items-center justify-center rounded-[12px] bg-white shadow-inner border transition-colors ${arc === 'india' ? 'border-orange-100' : 'border-pink-50'}`}>
-                        <div className={`text-3xl ${step.id === currentIdx ? 'animate-bounce' : ''}`}>{step.icon}</div>
+                      <div className={`relative w-full aspect-square mb-2 flex items-center justify-center rounded-[14px] bg-white shadow-inner border transition-colors ${arc === 'india' ? 'border-orange-100' : 'border-pink-50'}`}>
+                        <div className={`text-4xl ${step.id === currentIdx ? 'animate-bounce' : ''}`}>{step.icon}</div>
                       </div>
-                      <h3 className={`font-black text-[15px] leading-tight break-words overflow-hidden max-h-[3.2em] w-full px-1 ${arc === 'india' ? 'text-orange-900' : 'text-pink-700'}`}>
+                      <h3 className={`font-black text-[16px] leading-tight break-words overflow-hidden max-h-[3.8em] w-full px-1 ${arc === 'india' ? 'text-orange-900' : 'text-pink-700'}`}>
                         {step.label}
                       </h3>
                     </div>
@@ -299,24 +299,26 @@ const App: React.FC = () => {
                 </div>
               </div>
 
-              {/* ULTRA COMPACT SINGLE-ROW FOOTER */}
-              <div className={`z-40 w-full backdrop-blur-md py-1.5 border-t shadow-[0_-8px_15px_rgba(0,0,0,0.03)] transition-colors duration-1000 shrink-0 ${arc === 'india' ? 'bg-orange-100/95 border-orange-200' : 'bg-white/95 border-pink-100'}`}>
-                <div className="max-w-xs mx-auto flex flex-row items-center gap-2 px-2">
-                  <div className="flex flex-row items-center gap-1.5 p-1 rounded-xl bg-black/5">
-                    {diceResults.map((v, i) => (
-                      <div key={i} className={`dice ${isRolling ? 'rolling' : ''} ${arc === 'india' ? 'border-orange-600 text-orange-600' : 'border-pink-500 text-pink-500'}`} style={{width: '32px', height: '32px', fontSize: '16px'}}>{isRolling ? "✨" : v}</div>
-                    ))}
-                  </div>
-                  <div className="flex flex-row gap-0.5">
-                    {[1, 2, 3].map(n => (
-                      <button key={n} disabled={isRolling || isJumping} onClick={() => setDiceCount(n as any)} 
-                        className={`w-7 h-8 rounded-lg font-black border transition-all text-[9px] ${diceCount === n ? (arc === 'india' ? 'bg-orange-600 text-white border-transparent' : 'bg-red-500 text-white border-transparent') : 'bg-white text-gray-400 border-gray-100'}`}>
-                        {n}x
-                      </button>
-                    ))}
+              {/* ULTRA COMPACT SINGLE-ROW FOOTER - FIXED AT BOTTOM FOR IPHONE */}
+              <div className={`z-40 w-full backdrop-blur-md pt-3 pb-[env(safe-area-inset-bottom,12px)] border-t shadow-[0_-8px_15px_rgba(0,0,0,0.03)] transition-colors duration-1000 shrink-0 ${arc === 'india' ? 'bg-orange-100/95 border-orange-200' : 'bg-white/95 border-pink-100'}`}>
+                <div className="max-w-xs mx-auto flex flex-row items-center gap-3 px-4">
+                  <div className="flex flex-col items-center gap-1.5 shrink-0">
+                    <div className="flex gap-1">
+                      {diceResults.map((v, i) => (
+                        <div key={i} className={`dice ${isRolling ? 'rolling' : ''} ${arc === 'india' ? 'border-orange-600 text-orange-600' : 'border-pink-500 text-pink-500'}`} style={{width: '38px', height: '38px', fontSize: '18px'}}>{isRolling ? "✨" : v}</div>
+                      ))}
+                    </div>
+                    <div className="flex gap-1">
+                      {[1, 2, 3].map(n => (
+                        <button key={n} disabled={isRolling || isJumping} onClick={() => setDiceCount(n as any)} 
+                          className={`w-8 h-8 rounded-lg font-black border transition-all text-[10px] ${diceCount === n ? (arc === 'india' ? 'bg-orange-600 text-white border-transparent' : 'bg-red-500 text-white border-transparent') : 'bg-white text-gray-400 border-gray-100'}`}>
+                          {n}x
+                        </button>
+                      ))}
+                    </div>
                   </div>
                   <button disabled={isRolling || isJumping} onClick={rollDice} 
-                    className={`flex-1 font-black h-[42px] rounded-xl shadow-sm transition-all text-sm tracking-[0.1em] ${isRolling || isJumping ? 'bg-gray-100 text-gray-400' : (arc === 'india' ? 'bg-gradient-to-r from-orange-600 to-yellow-500 text-white' : 'bg-gradient-to-r from-red-600 to-pink-500 text-white')} active:scale-95`}>
+                    className={`flex-1 font-black h-[70px] rounded-2xl shadow-sm transition-all text-xl tracking-[0.1em] ${isRolling || isJumping ? 'bg-gray-100 text-gray-400' : (arc === 'india' ? 'bg-gradient-to-r from-orange-600 to-yellow-500 text-white' : 'bg-gradient-to-r from-red-600 to-pink-500 text-white')} active:scale-95`}>
                     {isRolling ? "..." : "ROLL 🎲"}
                   </button>
                 </div>
@@ -325,16 +327,16 @@ const App: React.FC = () => {
           )}
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center p-6 w-full h-full max-w-[393px] mx-auto relative">
+        <div className="flex flex-col items-center justify-center p-6 w-full h-full max-w-[393px] mx-auto relative pt-[env(safe-area-inset-top,20px)] pb-[env(safe-area-inset-bottom,20px)]">
           <div className="w-full mb-10 px-4 z-10">
-            <div className="bg-white/90 rounded-full h-2.5 overflow-hidden border border-pink-100 shadow-sm p-[2px]">
+            <div className="bg-white/90 rounded-full h-3 overflow-hidden border border-pink-100 shadow-sm p-[2px]">
               <div className="bg-gradient-to-r from-red-500 via-pink-500 to-red-400 h-full rounded-full transition-all duration-1000" style={{ width: `${lovePower}%` }} />
             </div>
           </div>
-          <div className="flex flex-col items-center text-center p-7 rounded-[35px] bg-white/75 backdrop-blur-md border border-white shadow-xl w-full relative">
+          <div className="flex flex-col items-center text-center p-8 rounded-[40px] bg-white/75 backdrop-blur-md border border-white shadow-xl w-full relative">
             <div className="text-7xl mb-6 animate-pulse">💝</div>
             <h1 className="text-4xl font-romantic text-red-600 mb-8 leading-tight">Will you be<br/><span className="text-pink-500">my Valentine?</span></h1>
-            <div className="flex flex-col items-center gap-8 relative w-full min-h-[200px]">
+            <div className="flex flex-col items-center gap-8 relative w-full min-h-[220px]">
               <button ref={yesButtonRef} onClick={handleYes} style={{ transform: `scale(${yesScale})` }} 
                 className="bg-gradient-to-br from-red-600 to-pink-600 text-white font-black py-6 px-14 rounded-full shadow-lg z-[100] text-2xl active:scale-90 transition-transform relative ring-4 ring-white/40">
                 YES! ❤️
@@ -342,7 +344,7 @@ const App: React.FC = () => {
               
               <div onPointerOver={moveNoButton} onPointerDown={moveNoButton} onClick={() => isNoTired && handleYes()}
                 style={noPosition ? { position: 'fixed', left: noPosition.x, top: noPosition.y, zIndex: 99999 } : { position: 'relative', zIndex: 50 }} className="flex flex-col items-center">
-                {noMsg && <div className="absolute -top-12 bg-white px-3 py-1.5 rounded-full shadow-md text-pink-600 font-black animate-bounce whitespace-nowrap border border-pink-50 text-[10px] z-[100000]">{noMsg}</div>}
+                {noMsg && <div className="absolute -top-12 bg-white px-3 py-1.5 rounded-full shadow-md text-pink-600 font-black animate-bounce whitespace-nowrap border border-pink-50 text-[11px] z-[100000]">{noMsg}</div>}
                 <button className={`bg-white/95 text-gray-400 font-bold py-4 px-10 rounded-[18px] shadow-sm border border-pink-50 text-base transition-all ${isNoTired ? 'text-red-500 border-red-500 scale-110' : ''}`}>
                   {isNoTired ? "OK, YES! ❤️" : "No..."}
                 </button>
