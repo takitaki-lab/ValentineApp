@@ -1,0 +1,1 @@
+// Types moved or simplified in index.tsx
