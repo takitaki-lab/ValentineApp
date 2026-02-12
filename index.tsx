@@ -273,7 +273,7 @@ const App: React.FC = () => {
 
           {!isBlastingOff && !isLandedOnPlanet && !goalReached && (
             <>
-              <div className="z-10 text-center px-4 pt-5 mb-1">
+              <div className="z-10 text-center px-4 pt-5 mb-1 shrink-0">
                 <p className={`text-[8px] tracking-[0.2em] uppercase font-black opacity-40 ${arc === 'india' ? 'text-orange-600' : 'text-pink-500'}`}>
                   {arc === 'valentine' ? `${currentIdx+1}/100` : `India ${currentIdx-99}/500`}
                 </p>
@@ -286,12 +286,12 @@ const App: React.FC = () => {
                 <div ref={pathScrollRef} className="life-path-scroll">
                   {STEPS_DATA.map(step => (
                     <div key={step.id} className={`step-tile step-${step.id} ${step.id === currentIdx ? 'active' : ''} ${step.id < currentIdx ? 'visited' : ''} ${step.isMilestone ? 'milestone' : ''}`}>
-                      {step.id === currentIdx && <div className={`absolute -top-10 text-4xl drop-shadow-md z-30 ${isJumping ? 'heart-jump' : ''}`}>{arc === 'india' ? '🛺' : '💖'}</div>}
+                      {step.id === currentIdx && <div className={`absolute -top-8 text-4xl drop-shadow-md z-30 ${isJumping ? 'heart-jump' : ''}`}>{arc === 'india' ? '🛺' : '💖'}</div>}
                       <span className="step-number">#{step.id + 1}</span>
-                      <div className={`relative w-full aspect-square mb-2 flex items-center justify-center rounded-[14px] bg-white shadow-inner border transition-colors ${arc === 'india' ? 'border-orange-100' : 'border-pink-50'}`}>
-                        <div className={`text-4xl ${step.id === currentIdx ? 'animate-bounce' : ''}`}>{step.icon}</div>
+                      <div className={`relative w-full aspect-square mb-1.5 flex items-center justify-center rounded-[12px] bg-white shadow-inner border transition-colors ${arc === 'india' ? 'border-orange-100' : 'border-pink-50'}`}>
+                        <div className={`text-3xl ${step.id === currentIdx ? 'animate-bounce' : ''}`}>{step.icon}</div>
                       </div>
-                      <h3 className={`font-black text-[16px] leading-tight break-words overflow-hidden max-h-[3.8em] w-full px-1 ${arc === 'india' ? 'text-orange-900' : 'text-pink-700'}`}>
+                      <h3 className={`font-black text-[15px] leading-tight break-words overflow-hidden max-h-[3.2em] w-full px-1 ${arc === 'india' ? 'text-orange-900' : 'text-pink-700'}`}>
                         {step.label}
                       </h3>
                     </div>
@@ -299,26 +299,24 @@ const App: React.FC = () => {
                 </div>
               </div>
 
-              {/* ULTRA COMPACT FOOTER UI */}
-              <div className={`z-40 w-full backdrop-blur-md py-2 border-t shadow-[0_-8px_15px_rgba(0,0,0,0.03)] transition-colors duration-1000 ${arc === 'india' ? 'bg-orange-100/90 border-orange-200' : 'bg-white/90 border-pink-100'}`}>
-                <div className="max-w-xs mx-auto flex flex-row items-center justify-between gap-3 px-3">
-                  <div className="flex flex-col items-center gap-1 shrink-0">
-                    <div className="flex gap-1">
-                      {diceResults.map((v, i) => (
-                        <div key={i} className={`dice ${isRolling ? 'rolling' : ''} ${arc === 'india' ? 'border-orange-600 text-orange-600' : 'border-pink-500 text-pink-500'}`} style={{width: '36px', height: '36px', fontSize: '18px'}}>{isRolling ? "✨" : v}</div>
-                      ))}
-                    </div>
-                    <div className="flex gap-1">
-                      {[1, 2, 3].map(n => (
-                        <button key={n} disabled={isRolling || isJumping} onClick={() => setDiceCount(n as any)} 
-                          className={`w-8 h-7 rounded-[8px] font-black border transition-all text-[9px] ${diceCount === n ? (arc === 'india' ? 'bg-orange-600 text-white border-transparent' : 'bg-red-500 text-white border-transparent') : 'bg-white text-gray-400 border-gray-100'}`}>
-                          {n}x
-                        </button>
-                      ))}
-                    </div>
+              {/* ULTRA COMPACT SINGLE-ROW FOOTER */}
+              <div className={`z-40 w-full backdrop-blur-md py-1.5 border-t shadow-[0_-8px_15px_rgba(0,0,0,0.03)] transition-colors duration-1000 shrink-0 ${arc === 'india' ? 'bg-orange-100/95 border-orange-200' : 'bg-white/95 border-pink-100'}`}>
+                <div className="max-w-xs mx-auto flex flex-row items-center gap-2 px-2">
+                  <div className="flex flex-row items-center gap-1.5 p-1 rounded-xl bg-black/5">
+                    {diceResults.map((v, i) => (
+                      <div key={i} className={`dice ${isRolling ? 'rolling' : ''} ${arc === 'india' ? 'border-orange-600 text-orange-600' : 'border-pink-500 text-pink-500'}`} style={{width: '32px', height: '32px', fontSize: '16px'}}>{isRolling ? "✨" : v}</div>
+                    ))}
+                  </div>
+                  <div className="flex flex-row gap-0.5">
+                    {[1, 2, 3].map(n => (
+                      <button key={n} disabled={isRolling || isJumping} onClick={() => setDiceCount(n as any)} 
+                        className={`w-7 h-8 rounded-lg font-black border transition-all text-[9px] ${diceCount === n ? (arc === 'india' ? 'bg-orange-600 text-white border-transparent' : 'bg-red-500 text-white border-transparent') : 'bg-white text-gray-400 border-gray-100'}`}>
+                        {n}x
+                      </button>
+                    ))}
                   </div>
                   <button disabled={isRolling || isJumping} onClick={rollDice} 
-                    className={`flex-1 font-black h-[68px] rounded-xl shadow-sm transition-all text-lg tracking-[0.1em] ${isRolling || isJumping ? 'bg-gray-100 text-gray-400' : (arc === 'india' ? 'bg-gradient-to-r from-orange-600 to-yellow-500 text-white' : 'bg-gradient-to-r from-red-600 to-pink-500 text-white')} active:scale-95`}>
+                    className={`flex-1 font-black h-[42px] rounded-xl shadow-sm transition-all text-sm tracking-[0.1em] ${isRolling || isJumping ? 'bg-gray-100 text-gray-400' : (arc === 'india' ? 'bg-gradient-to-r from-orange-600 to-yellow-500 text-white' : 'bg-gradient-to-r from-red-600 to-pink-500 text-white')} active:scale-95`}>
                     {isRolling ? "..." : "ROLL 🎲"}
                   </button>
                 </div>
